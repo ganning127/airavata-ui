@@ -78,7 +78,7 @@ const Home = () =>
                                 )
                             }
 
-                            <Heading size='lg'>
+                            <Heading size='lg' mt={4}>
                                 Connection Information
                             </Heading>
                             <VStack spacing={4}>
