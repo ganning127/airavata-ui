@@ -73,7 +73,7 @@ const Home = () =>
                                 timesConnected > 0 && (
                                     <Alert status='error'>
                                         <AlertIcon />
-                                        Your connection information is not valid.
+                                        Your connection information is not valid, or your VNC server is not running.
                                     </Alert>
                                 )
                             }
