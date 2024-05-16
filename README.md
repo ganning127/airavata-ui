@@ -15,3 +15,6 @@
 1. Run the proxy between TCP and WebSocket server (`npm run proxy`) --- do this in a separate terminal, because it will "hang" the terminal
 2. Run the ElectronJS application (`npm run dev`)
 3. The application should open automatically
+
+### Current features
+- [x] VNC client for connecting to a VNC server
