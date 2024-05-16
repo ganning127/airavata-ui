@@ -1,21 +1,21 @@
-<p align="center"><img src="https://i.imgur.com/X7dSE68.png"></p>
+# Airavata UI
 
-## Usage
+*Ganning Xu*, GSoC 2024 Project
 
-### Create an App
+## Running this project
 
-```
-# with npx
-$ npx create-nextron-app my-app --example basic-lang-javascript
+### Setup
+1. Clone this repository (`git clone https://github.com/ganning127/airavata-ui.git`)
+2. Navigate to the project directory (`cd airavata-ui`)
+3. Install dependencies (`npm i`)
 
-# with yarn
-$ yarn create nextron-app my-app --example basic-lang-javascript
+### Running the ElectronJS application
+| **Make sure you have correct URL in `proxy/novnc_proxy`, line 53**
 
-# with pnpm
-$ pnpm dlx create-nextron-app my-app --example basic-lang-javascript
-```
+1. Run the proxy between TCP and WebSocket server (`npm run proxy`) --- do this in a separate terminal, because it will "hang" the terminal
+2. Run the ElectronJS application (`npm run dev`)
 
-### Install Dependencies
+
 
 ```
 $ cd my-app
