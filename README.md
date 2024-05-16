@@ -16,5 +16,6 @@
 2. Run the ElectronJS application (`npm run dev`)
 3. The application should open automatically
 
-### Current features
+## Current features
+
 - [x] VNC client for connecting to a VNC server
