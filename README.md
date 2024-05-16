@@ -10,7 +10,7 @@
 3. Install dependencies (`npm i`)
 
 ### Running the ElectronJS application
-| **Make sure you have correct URL in `proxy/novnc_proxy`, line 53**
+> **Make sure you have correct URL in `proxy/novnc_proxy`, line 53**
 
 1. Run the proxy between TCP and WebSocket server (`npm run proxy`) --- do this in a separate terminal, because it will "hang" the terminal
 2. Run the ElectronJS application (`npm run dev`)
