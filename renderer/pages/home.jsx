@@ -4,9 +4,9 @@ import
 {
     Heading, FormControl,
     FormLabel,
-    FormErrorMessage,
+    Box,
     Input,
-    FormHelperText,
+    Text,
     Container,
     VStack,
     Button,
@@ -69,21 +69,24 @@ const Home = () =>
                 !rendering && (
                     <>
                         <Container mt={16}>
+                            <Heading size='lg' color='blue.600'>
+                                Connection Information
+                            </Heading>
+
                             {
                                 timesConnected > 0 && (
-                                    <Alert status='error'>
+                                    <Alert status='error' rounded='md' mt={2}>
                                         <AlertIcon />
-                                        Your connection information is not valid, or your VNC server is not running.
+                                        <Text>
+                                            <Text as='span' color='red.800' fontWeight='bold'>Something went wrong</Text>. Please check that your VNC server is running and your web proxy is running.
+                                        </Text>
                                     </Alert>
                                 )
                             }
 
-                            <Heading size='lg' mt={4}>
-                                Connection Information
-                            </Heading>
-                            <VStack spacing={4}>
+                            <VStack spacing={4} mt={4}>
                                 <FormControl>
-                                    <FormLabel>Hostname</FormLabel>
+                                    <FormLabel>VNC Server Hostname</FormLabel>
                                     <Input type='text' value={hostname} onChange={(e) =>
                                     {
                                         setHostname(e.target.value);
@@ -92,7 +95,7 @@ const Home = () =>
 
 
                                 <FormControl>
-                                    <FormLabel>Port</FormLabel>
+                                    <FormLabel>VNC Server Port</FormLabel>
                                     <Input type='text' value={port} onChange={(e) =>
                                     {
                                         setPort(e.target.value);
@@ -116,8 +119,8 @@ const Home = () =>
                                     }} placeholder='Password' />
                                 </FormControl>
 
-                                <Button onClick={handleSubmitInfo} colorScheme='blue'>
-                                    Connect
+                                <Button onClick={handleSubmitInfo} colorScheme='blue' w='full'>
+                                    Connect to VNC server
                                 </Button>
                             </VStack>
 
@@ -128,28 +131,30 @@ const Home = () =>
 
             {rendering && (
                 <>
-                    <VncScreen
-                        url={hostname + ':' + port}
-                        scaleViewport
-                        background="#000000"
-                        style={{
-                            width: '100%',
-                            height: '75vh',
-                        }}
-                        rfbOptions={{
-                            credentials: {
-                                username,
-                                password
-                            }
-                        }}
-                        ref={ref}
-                        onCredentialsRequired={handleOnCredentialsRequired}
-                        onDisconnect={handleOnDisconnect}
-                    />
+                    <Box textAlign='center'>
+                        <VncScreen
+                            url={hostname + ':' + port}
+                            scaleViewport
+                            background="#000000"
+                            style={{
+                                width: '100%',
+                                height: '75vh',
+                            }}
+                            rfbOptions={{
+                                credentials: {
+                                    username,
+                                    password
+                                }
+                            }}
+                            ref={ref}
+                            onCredentialsRequired={handleOnCredentialsRequired}
+                            onDisconnect={handleOnDisconnect}
+                        />
 
-                    <Button onClick={handleDisconnect}>
-                        Disconnect
-                    </Button>
+                        <Button onClick={handleDisconnect} colorScheme='red' mt={4}>
+                            Disconnect
+                        </Button>
+                    </Box>
                 </>
             )
             }
