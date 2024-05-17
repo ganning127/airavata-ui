@@ -1,4 +1,4 @@
-import { Box, Center, Flex, FormControl, FormLabel, Input, Img, Text, VStack, Button, Alert, AlertIcon } from "@chakra-ui/react";
+import { Box, Center, Flex, FormControl, FormLabel, Input, Img, Text, VStack, Button, Alert, AlertIcon, Link, Spacer } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -66,6 +66,17 @@ const Login = () =>
 
                     <Button colorScheme='blue' onClick={handleLogin} w='full'>Login to Airavata UI</Button>
 
+                    <Flex alignItems='center' w='full'>
+                        <Box>
+                            <Text><Link color='blue.500' href='/home'>Back to home</Link></Text>
+                        </Box>
+
+                        {/* <Spacer />
+
+                        <Box>
+                            <Text><Link>Back to home</Link></Text>
+                        </Box> */}
+                    </Flex>
 
                 </VStack>
             </Box>
