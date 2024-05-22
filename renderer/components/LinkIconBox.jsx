@@ -41,8 +41,6 @@ export const LinkIconBox = ({ vertical, horizontal, active, icon, text, href, ..
             finalBorderString += " ";
         }
     }
-
-    console.log(text, active);
     return (
         <Link href={href} _hover={{}}>
             <Flex alignItems='center' justifyContent='center' textAlign='center' borderWidth='1px' borderColor='gray.300' bg={active ? 'white' : 'gray.100'} borderRadius={finalBorderString} h={BOX_SIZE} w={BOX_SIZE} transition='all .2s' _hover={{ bg: 'white', color: activeColor }} color={active ? activeColor : defaultColor}  {...props} >
