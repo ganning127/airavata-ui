@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 
 const VncClient = () =>
 {
+  // Can't import regularly because of SSR (next.js)
   const VncScreen = dynamic(() =>
   {
     return import('react-vnc').then((mod) => mod.VncScreen);
@@ -80,7 +81,7 @@ const VncClient = () =>
 
     const exitingFunction = () =>
     {
-      window.vnc.stopProxy(false);
+      window.vnc.stopProxy(false); // false = don't restart
     };
 
     router.events.on("routeChangeStart", exitingFunction);

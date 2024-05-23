@@ -231,13 +231,7 @@ echo -e "    Port: ${PORT}\n"
 echo -e "${HOST}" > proxy/config.txt
 echo -e "${PORT}" >> proxy/config.txt
 
-# echo -e "\n\nNavigate to this URL:\n"
-# if [ "x$SSLONLY" == "x" ]; then
-#     echo -e "    http://${HOST}:${PORT}/vnc.html?host=${HOST}&port=${PORT}\n"
-# else
-#     echo -e "    https://${HOST}:${PORT}/vnc.html?host=${HOST}&port=${PORT}\n"
-# fi
-
-echo "HANG_NOW"
+# signal to the Airavata UI that the proxy is ready
+echo "HANG_NOW" 
 
 wait ${proxy_pid}

@@ -86,7 +86,6 @@ async function startIt(event)
 
     if (data == "HANG_NOW")
     {
-      console.log("WE ARE IN HANG NOW");
       fs.readFile('./proxy/config.txt', 'utf8', (err, data) =>
       {
         const lines = data.split('\n');
