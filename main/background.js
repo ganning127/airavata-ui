@@ -30,11 +30,11 @@ if (isProd)
 
   if (isProd)
   {
-    await mainWindow.loadURL('app://./vnc-client');
+    await mainWindow.loadURL('app://./home');
   } else
   {
     const port = process.argv[2];
-    await mainWindow.loadURL(`http://localhost:${port}/vnc-client`);
+    await mainWindow.loadURL(`http://localhost:${port}/home`);
     mainWindow.webContents.openDevTools();
   }
 })();
@@ -83,19 +83,12 @@ async function startIt(event)
   cmd.stdout.on('data', (data) =>
   {
     data = data.toString().trim();
-    console.log(data);
-
-    console.log(typeof data);
 
     if (data == "HANG_NOW")
     {
       console.log("WE ARE IN HANG NOW");
       fs.readFile('./proxy/config.txt', 'utf8', (err, data) =>
       {
-        // the file is formatted like:
-        // hostname
-        // port
-        // read both 
         const lines = data.split('\n');
         const hostname = lines[0];
         const port = lines[1];

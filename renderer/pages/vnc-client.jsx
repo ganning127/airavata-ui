@@ -26,9 +26,7 @@ const VncClient = () =>
   }, { ssr: false });
 
 
-  // const vncScreenRef = useRef<React.ElementRef<typeof VncScreen>>(null);
   const router = useRouter();
-
   const ref = useRef();
   const toast = useToast();
   const [password, setPassword] = useState('1234');
@@ -37,6 +35,7 @@ const VncClient = () =>
   const [username, setUsername] = useState('');
   const [rendering, setRendering] = useState(false);
   const [timesConnected, setTimesConnected] = useState(0);
+  const [loading, setLoading] = useState(false);
 
 
   const handleOnCredentialsRequired = (rfb) =>
@@ -52,13 +51,14 @@ const VncClient = () =>
 
   useEffect(() =>
   {
-    window.vnc.startProxy();
+    setLoading(true);
 
+    window.vnc.startProxy();
 
     window.vnc.proxyStarted((event, hostname, port) =>
     {
       console.log('Proxy started', hostname, port);
-
+      setLoading(false);
       toast({
         title: 'Proxy started',
         description: "",
@@ -74,13 +74,6 @@ const VncClient = () =>
     window.vnc.proxyStopped((event, restart) =>
     {
       console.log('Proxy stopped');
-      toast({
-        title: 'Proxy Stopped',
-        description: "",
-        status: 'info',
-        duration: 9000,
-        isClosable: true,
-      });
 
       if (restart) window.vnc.startProxy();
     });
@@ -126,72 +119,79 @@ const VncClient = () =>
 
       <NavContainer activePage='VNC Client'>
         {
-          !rendering && (
+          loading && (
             <>
-              <Container mt={16}>
-                <Heading size='lg' color='blue.600'>
-                  Connection Information
-                </Heading>
-
-                {
-                  timesConnected > 0 && (
-                    <Alert status='error' rounded='md' mt={2}>
-                      <AlertIcon />
-                      <Text>
-                        <Text as='span' color='red.800' fontWeight='bold'>Something went wrong</Text>. Please make sure your VNC server is running and your web proxy is running.
-                      </Text>
-                    </Alert>
-                  )
-                }
-
-                <VStack spacing={4} mt={4}>
-                  <FormControl>
-                    <FormLabel>VNC Server Hostname</FormLabel>
-                    <Input type='text' value={hostname} onChange={(e) =>
-                    {
-                      setHostname(e.target.value);
-                    }} placeholder='ws://your-url' />
-                  </FormControl>
-
-
-                  <FormControl>
-                    <FormLabel>VNC Server Port</FormLabel>
-                    <Input type='text' value={port} onChange={(e) =>
-                    {
-                      setPort(e.target.value);
-                    }} placeholder='Port' />
-                  </FormControl>
-
-                  <FormControl>
-                    <FormLabel>Username</FormLabel>
-                    <Input type='text' value={username} onChange={(e) =>
-                    {
-                      setUsername(e.target.value);
-                    }} placeholder='Username' />
-                  </FormControl>
-
-
-                  <FormControl>
-                    <FormLabel>Password</FormLabel>
-                    <Input type='password' value={password} onChange={(e) =>
-                    {
-                      setPassword(e.target.value);
-                    }} placeholder='Password' />
-                  </FormControl>
-
-                  <Button onClick={handleSubmitInfo} colorScheme='blue' w='full'>
-                    Connect to VNC server
-                  </Button>
-
-                  <Button onClick={() =>
-                  {
-                    window.vnc.stopProxy();
-                  }}>Stop Proxy</Button>
-                </VStack>
-
-              </Container>
+              <Alert status='info' rounded='md'>
+                <AlertIcon />
+                <Text>
+                  We're attempting to start the VNC server and proxy. This will take longer if this is your first time using the VNC client. Please wait...
+                </Text>
+              </Alert>
             </>
           )
+        }
+
+        {!rendering && (
+          <>
+            <Container mt={16}>
+              <Heading size='lg' color='blue.600'>
+                Connection Information
+              </Heading>
+
+              {
+                timesConnected > 0 && (
+                  <Alert status='error' rounded='md' mt={2}>
+                    <AlertIcon />
+                    <Text>
+                      <Text as='span' color='red.800' fontWeight='bold'>Something went wrong</Text>. Please make sure your VNC server is running and your web proxy is running.
+                    </Text>
+                  </Alert>
+                )
+              }
+
+              <VStack spacing={4} mt={4}>
+                <FormControl>
+                  <FormLabel>VNC Server Hostname</FormLabel>
+                  <Input type='text' value={hostname} onChange={(e) =>
+                  {
+                    setHostname(e.target.value);
+                  }} placeholder='ws://your-url' />
+                </FormControl>
+
+
+                <FormControl>
+                  <FormLabel>VNC Server Port</FormLabel>
+                  <Input type='text' value={port} onChange={(e) =>
+                  {
+                    setPort(e.target.value);
+                  }} placeholder='Port' />
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Username</FormLabel>
+                  <Input type='text' value={username} onChange={(e) =>
+                  {
+                    setUsername(e.target.value);
+                  }} placeholder='Username' />
+                </FormControl>
+
+
+                <FormControl>
+                  <FormLabel>Password</FormLabel>
+                  <Input type='password' value={password} onChange={(e) =>
+                  {
+                    setPassword(e.target.value);
+                  }} placeholder='Password' />
+                </FormControl>
+
+                <Button onClick={handleSubmitInfo} colorScheme='blue' w='full' isDisabled={loading}>
+                  Connect to VNC server
+                </Button>
+              </VStack>
+
+            </Container>
+          </>
+        )
         }
 
         {rendering && (

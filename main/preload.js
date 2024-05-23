@@ -33,6 +33,4 @@ contextBridge.exposeInMainWorld('vnc', {
   {
     ipcRenderer.once('proxy-stopped', callback);
   }
-
-
 });
